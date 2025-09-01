@@ -370,10 +370,8 @@ lvgl:
   style_definitions:
     - id: roboto15_style
       text_font: roboto15_font
-
     - id: control
       bg_color: $button_control_color
-
     - id: header_footer
       bg_color: 0x000000
       radius: 0
@@ -512,7 +510,7 @@ lvgl:
                         data:
                           entity_id: $btn_6
 
-    - id: kitchen_page
+    - id: second_page
       widgets:
         - label:
             text_font: roboto17_font
