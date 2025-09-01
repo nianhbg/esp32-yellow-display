@@ -1,5 +1,5 @@
 esphome:
-  name: cyd 
+  name: cyd
   friendly_name: cyd
 
 esp32:
@@ -8,7 +8,7 @@ esp32:
     type: arduino
 
 substitutions:
-  device_name: cyd 
+  device_name: cyd
   friendly_name: cyd
 
   icon_font: icon_font
@@ -17,7 +17,13 @@ substitutions:
   lightbulb_outline: "\U000F0336"
   lightbulb_multi: "\U000F1253"
   lightbulb_multi_outline: "\U000F1254"
-
+  # homeassistant entitys:
+  btn_1: light.kitchen_shell1
+  btn_2: light.kitchen_shell2
+  btn_3: light.0x60b647fffe7a2a66
+  btn_4:
+  btn_5: light.matrum_gata_fonster
+  btn_6: light.kitchen
 
 # Enable logging
 logger:
@@ -25,7 +31,7 @@ logger:
 # Enable Home Assistant API
 api:
   encryption:
-    key: !secret api_key 
+    key: !secret api_key
 
   on_client_connected:
     - if:
@@ -122,7 +128,7 @@ font:
         "\U000F0336", # mdi-lightbulb-outline
         "\U000F1253", # mdi-lightbulb-multi
         "\U000F1254", # mdi-lightbulb-multi-outline
-          ]
+      ]
 
 number:
   - platform: template
@@ -140,7 +146,7 @@ number:
 text_sensor:
   - platform: homeassistant
     id: ts_remote_light_gata_fonster
-    entity_id: light.matrum_gata_fonster
+    entity_id: $btn_5
     on_value:
       then:
         - lvgl.widget.update:
@@ -163,7 +169,7 @@ text_sensor:
 
   - platform: homeassistant
     id: ts_remote_light_hylla_kok
-    entity_id: light.kitchen_shell1
+    entity_id: $btn_1
     on_value:
       then:
         - lvgl.widget.update:
@@ -186,7 +192,7 @@ text_sensor:
 
   - platform: homeassistant
     id: ts_remote_light2_hylla_kok
-    entity_id: light.kitchen_shell2
+    entity_id: btn_2
     on_value:
       then:
         - lvgl.widget.update:
@@ -209,7 +215,7 @@ text_sensor:
 
   - platform: homeassistant
     id: ts_remote_light3_skap_kok
-    entity_id: light.0x60b647fffe7a2a66
+    entity_id: btn_3
     on_value:
       then:
         - lvgl.widget.update:
@@ -232,7 +238,7 @@ text_sensor:
 
   - platform: homeassistant
     id: ts_remote_light_all_kok
-    entity_id: light.kitchen
+    entity_id: $btn_6
     on_value:
       then:
         - lvgl.widget.update:
@@ -252,7 +258,6 @@ text_sensor:
               }
               snprintf(buf, sizeof(buf), "%s", icon.c_str());
               return buf;
-
 
 # Display Configuration
 display:
@@ -324,12 +329,6 @@ lvgl:
           y: 7
           text_align: right
           text_color: 0xFFFFFF
-      
-#      - label:
-#          id: my_time_label
-#          align: top_center
-#          text_align: CENTER
-#          text_color: 0xFFFFFF
 
       - label:
           text: $device_name
@@ -376,11 +375,7 @@ lvgl:
       bg_color: $button_control_color
 
     - id: header_footer
-      bg_color: 0x000000 
-        #      bg_grad_color: 0x005782
-        #      bg_grad_dir: VER
-        #      bg_opa: COVER
-        #      border_opa: TRANSP
+      bg_color: 0x000000
       radius: 0
       pad_all: 0
       pad_row: 0
@@ -398,7 +393,7 @@ lvgl:
             height: 320
             bg_color: 0x000000
             border_color: 0x000000
-            pad_top: 30 
+            pad_top: 30
             pad_bottom: 40
             pad_left: 5
             pad_right: 5
@@ -424,8 +419,7 @@ lvgl:
                     - homeassistant.action:
                         action: light.toggle
                         data:
-                          entity_id: light.kitchen_shell1
-
+                          entity_id: $btn_1
 
               - button:
                   checkable: true
@@ -444,7 +438,7 @@ lvgl:
                     - homeassistant.action:
                         action: light.toggle
                         data:
-                          entity_id: light.0x60b647fffe7a2a66
+                          entity_id: $btn_3
 
               - button:
                   checkable: true
@@ -463,7 +457,7 @@ lvgl:
                     - homeassistant.action:
                         action: light.toggle
                         data:
-                          entity_id: light.matrum_gata_fonster
+                          entity_id: $btn_5
 
               - button:
                   checkable: true
@@ -483,7 +477,7 @@ lvgl:
                     - homeassistant.action:
                         action: light.toggle
                         data:
-                          entity_id: light.kitchen_shell2
+                          entity_id: $btn_2
 
               - button:
                   checkable: true
@@ -516,8 +510,7 @@ lvgl:
                     - homeassistant.action:
                         action: light.toggle
                         data:
-                          entity_id: light.kitchen
-
+                          entity_id: $btn_6
 
     - id: kitchen_page
       widgets:
